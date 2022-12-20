@@ -22,14 +22,38 @@ Should be able to set breakpoints in the gutter and step debug
 
 - command line arg parser
 
-- homebrew get osx mac working
-  - https://github.com/tednaleid/homebrew-ganda/blob/master/Formula/ganda.rb
-
-- how do we capture stdout of a command line app we ran
-  - save to string
-  - stream of it that we react to
+- other hashes:
+  - murmur2_32
+  - murmur3_32
 
 - tests with https://nim-lang.org/docs/unittest.html
   - set up code so that we're building the string commands to run and that's what we test
   - glue code is actually running it
   - can we mock out the running of the exec command?
+  - get vscode to run tests on save instead of building binary?
+
+
+#### kafka-esque
+- work with kafka/librdkafka
+- copy over docker-compose/tls cert stuff from other kafka-esque
+- parse TOML config file (or json?)
+  - this goes in ~/.config/esque
+    - symlinked?
+    - allow env variable override
+
+implement features:
+- cat
+- first
+- tail
+- describe
+- config
+- compression
+- size
+- 
+
+- certificate passwords?
+  - where do they get stored/accessed?
+
+
+- homebrew get osx mac working
+  - https://github.com/tednaleid/homebrew-ganda/blob/master/Formula/ganda.rb

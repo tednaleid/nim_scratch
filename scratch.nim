@@ -16,5 +16,5 @@ let doubledLetters = letters.map(doubledtransformer)
 
 let doubledString = letters.map(x => x & x).foldl(a & b, "")
 
-log $doubledLetters
-log $doubledString
+echo $doubledLetters
+echo $doubledString

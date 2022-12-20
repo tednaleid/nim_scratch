@@ -16,8 +16,8 @@ let returnCode = execCmd(command)
 
 log "returnCode: " & $returnCode
 
-# let outputAndExitCode = execCmdEx(command)
 
+# let outputAndExitCode = execCmdEx(command)
 # log "outputAndExitCode: " & $outputAndExitCode
 # log "output: " & outputAndExitCode.output
 # log "exit code: " & $outputAndExitCode.exitCode

@@ -7,6 +7,7 @@
             "command": "nim",
             "args": [
                 "compile",
+                "-r",
                 "-g",
                 "--debugger:native",
                 "-o:${workspaceRoot}/bin/${fileBasenameNoExtension}",

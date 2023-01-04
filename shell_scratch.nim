@@ -1,6 +1,6 @@
-import os, osproc
+import os, osproc, strformat
 
-var command = ""
+var command = "ls"
 
 let args = commandLineParams()
 
@@ -8,7 +8,7 @@ if args.len() == 1:
     command = args[0]
 
 proc log(msg: string) =
-    stderr.write(msg & "\n")
+    stderr.writeLine msg
 
 ("running: " & command).log
 
@@ -16,11 +16,10 @@ let returnCode = execCmd(command)
 
 log "returnCode: " & $returnCode
 
-
-# let outputAndExitCode = execCmdEx(command)
-# log "outputAndExitCode: " & $outputAndExitCode
-# log "output: " & outputAndExitCode.output
-# log "exit code: " & $outputAndExitCode.exitCode
+let outputAndExitCode = execCmdEx(command)
+log "outputAndExitCode: " & $outputAndExitCode
+log "output: " & outputAndExitCode.output
+log "exit code: " & $outputAndExitCode.exitCode
 
 const opts = {poUsePath, poDaemon, poEchoCmd}
 

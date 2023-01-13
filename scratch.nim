@@ -18,3 +18,13 @@ let doubledString = letters.map(x => x & x).foldl(a & b, "")
 
 echo $doubledLetters
 echo $doubledString
+
+
+import regex_scratch
+
+when isMainModule:
+  echo "FooBar".toKebabCase
+  echo "foo-bar".toKebabCase
+  echo "FooBAR".toKebabCase
+  echo "FooBAr".toKebabCase
+  echo "BAZqux".toKebabCase

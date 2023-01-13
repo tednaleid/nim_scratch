@@ -63,3 +63,85 @@ let y3 = twiceT(10, n):
   echo "Gratuitous echo!"
   return n * n
 echo y3
+
+
+template t(body: untyped) =
+  proc p = echo "hey"
+  block:
+    body
+
+t:
+  p() 
+
+
+
+var observed: seq[string] = @[]
+
+let ip = proc(value: string): int =
+  observed.add(value)
+  result = 0
+
+echo ip("foo") == 0
+echo observed[0] == "foo"
+
+# template version of ^^ 
+
+var observed2: seq[string] = @[]
+
+template inlineProc(obs: untyped): untyped =
+  (proc(value: string): int =
+    obs.add(value)
+    result = 0)
+
+let ip2 = inlineProc(observed2)
+
+echo ip2("bar") == 0
+echo observed2[0] == "bar"
+
+
+
+type MyContext* = ref object
+  sayHello*: proc(context: MyContext, name: string): string
+
+proc defaultSayHello(context: MyContext, name: string): string = "hello " & name
+
+proc buildContext( 
+  sayHello: proc(context: MyContext, name: string): string = defaultSayHello): 
+  MyContext = MyContext(sayHello: sayHello)
+
+let context1 = buildContext()
+
+assert context1.sayHello(context1, "world") == "hello world"
+
+proc testHello(): bool =
+  var observed: seq[string] = @[]
+  let observedHello = (proc(context: MyContext, name: string): string =
+    observed.add(name)
+    result = defaultSayHello(context, name))
+
+  var context = buildContext(observedHello)
+
+  assert context.sayHello(context1, "boo-urns") == "hello boo-urns"
+  assert observed[0] == "boo-urns"
+  result = true
+
+echo testHello()
+
+template observeName(obs: seq[string]): proc(context: MyContext, name: string): string =
+  (proc(context: MyContext, name: string): string =
+    obs.add(name)
+    result = defaultSayHello(context, name)
+  )
+  
+
+proc testHello2(): bool =
+  var observed: seq[string] = @[]
+  let observedHello = observeName(observed)
+  var context = buildContext(observedHello)
+
+  assert context.sayHello(context1, "burns") == "hello burns"
+  assert observed[0] == "burns"
+  result = true
+
+echo testHello2()
+

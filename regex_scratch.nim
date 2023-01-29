@@ -49,3 +49,20 @@ when isMainModule:
   echo "FooBAr".toKebabCase
   echo "BAZqux".toKebabCase
 
+
+proc regexGroupValue(match: Option[RegexMatch], group: int): string =
+  result = ""
+  if match.isSome:
+    let captures = match.get.captures.toSeq
+    let groupOption = captures[group]
+    if groupOption.isSome:
+      result = groupOption.get
+
+let splitTopicFromPartitionRegex = re"""(.+)-([^-]+)"""
+
+proc splitTopicFromPartition*(topicPartition: string): tuple[topic: string, partition: int] =
+  let found = topicPartition.find(splitTopicFromPartitionRegex)
+  result = (topic: found.regexGroupValue(0), partition: found.regexGroupValue(1).parseInt)
+
+when isMainModule:
+  echo "foo-bar-16".splitTopicFromPartition

@@ -10,5 +10,4 @@ proc hashFileLines(file: File) =
   while file.readLine(line):
     hashLine(line)
 
-when isMainModule:
-  hashFileLines(stdin)
+hashFileLines(stdin)
